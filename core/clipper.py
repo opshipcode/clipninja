@@ -186,7 +186,8 @@ def cut_clips(video_path, segment_data, job_id, clip_index):
 
     # Generate captions on the raw concat clip
     srt_path = os.path.join(tmp_dir, "captions.srt")
-    caption_file = generate_captions(raw_clip_path, srt_path)
+    caption_file = None
+    # caption_file = generate_captions(raw_clip_path, srt_path)
 
     # Apply crop + captions
     safe_title = "".join(c for c in segment_data.get("title", f"clip_{clip_index}") if c.isalnum() or c in " _-")[:40]
