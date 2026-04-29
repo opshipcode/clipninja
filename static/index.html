@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ClipForge</title>
+  <title>clipninja</title>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
@@ -468,7 +468,7 @@
 
 <!-- ── Header ── -->
 <header>
-  <div class="logo">Clip<span>Forge</span></div>
+  <div class="logo">clip<span>ninja</span></div>
   <div class="api-wrap">
     <span class="api-label">Gemini Key</span>
     <input
@@ -673,12 +673,17 @@
         return;
       }
 
-      if (data.status === 'complete') {
-        clearInterval(pollInterval);
-        document.getElementById('process-btn').disabled = false;
-        clipData = data.clips || [];
-        renderClips(clipData);
-      }
+
+      if (data.clips && data.clips.length > clipData.length) {
+    clipData = data.clips;
+    renderClips(clipData);
+    document.getElementById('results-section').style.display = 'block';
+}
+
+if (data.status === 'complete') {
+    clearInterval(pollInterval);
+    document.getElementById('process-btn').disabled = false;
+}
 
     } catch (e) {
       // Network blip — keep polling
