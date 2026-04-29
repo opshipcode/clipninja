@@ -1,10 +1,9 @@
 import json
-import google.generativeai as genai
+from google import genai
 
 
 def segment_with_gemini(transcript, meta, gemini_key, num_clips, min_dur, max_dur, per_clip_durations=None):
-    genai.configure(api_key=gemini_key)
-    model = genai.GenerativeModel("gemini-1.5-pro")
+    client = genai.Client(api_key=gemini_key)
 
     # Build transcript text
     transcript_text = "\n".join(
@@ -70,7 +69,11 @@ CRITICAL RULES:
 - JSON must be valid and parseable.
 """
 
-    response = model.generate_content(prompt)
+
+    response = client.models.generate_content(
+        model="gemini-3-flash-preview",
+        contents=prompt
+    )
     raw = response.text.strip()
 
     # Strip any accidental markdown fences
